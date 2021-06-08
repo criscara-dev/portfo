@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="Cristian Caratti portfolio website" name="Cristian Caratti portfolio website" />
+    <meta name="google" content="notranslate" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}" />
+    <link href="../static/assets/favicon.ico" rel="icon" />
+    <title>Cristian Caratti - Website</title>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li><a href="#about-me">Start Here</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contacts">Contacts</a></li>
+        <!-- <li><a href="https://criscara-dev.github.io/digital-garden/" target="_blank">🚧 Docs</a></li> -->
+        <li>
+          <a href="https://github.com/criscara-dev" target="_blank"><img src="./static/assets/github_icon_64px.png" width="50" height="auto" alt="github" /></a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/cristian-caratti-00a1b7136/" target="_blank"><img src="./static/assets/linkedin_logo_icon_64px.png" width="50" height="auto" alt="linkedin" /></a>
+        </li>
+        <li>
+          <a href="https://twitter.com/criscaratti"><img src="./static/assets/twitter_logo_icon_64px.png" width="50" height="auto" alt="twitter" /></a>
+        </li>
+      </ul>
+    </nav>
+    <main>
+      <section>
+        <article>
+          <p id="about-me">
+            Hi, I am Cristian, <br />
+            from London, UK. 🇬🇧 <br />
+            This website hosts all of my writing about my personal projects as a web developer and software engineering.<br />
+            I had experience working as a Salesforce Developer/Admin and as a WordPress developer with PHP and SQL databases. <br />
+            I always try to use the right technology for the right job and I like to work on projects that help companies better understand and use their data to reach their goals.<br />
+            In my last project, I helped a non-profit Organization integrate their WordPress website into the Salesforce platform. <br />
+            I am currently creating full-stack Apps while learning Machine Learning and Data Science to expand my knowledge of what is possibile to achieve with software and machines.
+          </p>
+          <hr />
+        </article>
+      </section>
+
+      <section id="projects">
+        <article class="project-item">
+          <h1>Password checker</h1>
+          <p>This Python app let you check if your password has ever been leaked. I am using the Password API from the pupular website: 'haveibeenpwned'.</p>
+          <ul>
+            <li>Python3</li>
+            <li>Password API</li>
+            <li>haslib</li>
+            <li>requests</li>
+          </ul>
+          <img src="../static/assets/passwordchecker.png" alt="scraping a website ethically" width="100%" height="auto" />
+          <button><a href="./password-checker.html" target="_blank">Learn more</a></button>
+        </article>
+        <article class="project-item">
+          <h1>🚧 Ethic Web Scraper</h1>
+          <p>Coming soon. How to 'ethically' scrape websites for data using the Library 'Beautiful Soup'.</p>
+          <ul>
+            <li>Python3</li>
+            <li>request</li>
+            <li>beautifulsoup</li>
+            <li>Mouse</li>
+          </ul>
+          <img src="../static/assets/scrape.png" alt="scraping a website ethically" width="100%" height="auto" />
+          <button><a href="#" target="_blank">Learn more</a></button>
+        </article>
+        <article class="project-item">
+          <h1>🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧</h1>
+          <p>Coming soon.</p>
+          <!-- <ul>
+            <li>Python</li>
+            <li>request</li>
+            <li>beautifulsoup</li>
+            <li>Mouse</li>
+          </ul> -->
+          <img src="../static/assets/minion-scientist.gif" alt="scraping a website ethically" width="100%" height="auto" />
+          <button><a href="#" target="_blank">Learn more</a></button>
+        </article>
+      </section>
+      <section id="contacts">
+        <p>Get in touch<br /></p>
+        <form action="submit_form" method="POST">
+          <input name="email" type="email" id="email" placeholder="Your Email" /><br />
+          <input name="subject" type="text" id="subject" placeholder="Subject" /><br />
+          <textarea name="message" rows="5" placeholder="Enter your message"></textarea><br />
+          <input type="submit" value="Send" />
+        </form>
+      </section>
+    </main>
+    <footer>&copy;cristiancaratti-templates 2021</footer>
+  </body>
+</html>

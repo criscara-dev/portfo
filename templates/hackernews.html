@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="Cristian Caratti portfolio website" name="Cristian Caratti portfolio website" />
+    <meta name="google" content="notranslate" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}" /> 
+    <link href="../static/assets/favicon.ico" rel="icon" />
+    <title>Cristian Caratti - Website</title>
+  </head>
+
+  <body>
+    <h1 style="background-color: #3b9bc4; color: #fff;">From Hacker News:</h1>
+
+    <div style="display: flex">
+      <article>
+        <h3 style="font-size: xx-large;">Hacker-News sorted by votes (>100):</h3>
+        <br>
+        <div >
+          {% for dict_item in my_dict %} {% for key, value in dict_item.items() %}
+          <!-- items() the entire item -->
+          {% if key == 'title' %}
+          <h4>{{value}}</h4>
+          {% endif %} {% if key == 'link' %}
+          <a href="{{value}}" target="_blank" >More info</a>
+          {% endif %} {% endfor %}
+          <hr />
+          {% endfor %}
+        </div>
+      </article>
+      <!-- "GET JOB POSTS HERE" -->
+      <article>
+        <h3 style="font-size: xx-large">Recent Hacker-News Jobs:</h3>
+        <br>
+        <div >
+          {% if my_dict %} {% for dict_item in my_dictJ %} {% for key, value in dict_item.items() %}
+          <!-- items() the entire item -->
+          {% if key == 'title' %}
+          <h4>{{value}}</h4>
+          {% endif %} {% if key == 'link' %}
+          <a href="{{value}}" target="_blank" >More info</a>
+          {% endif %} {% endfor %}
+          <hr />
+          {% endfor %} {% endif %}
+        </div>
+      </article>
+    </div>
+  </body>
+</html>
+
+<footer>&copy;cristiancaratti-templates 2021</footer>
+</body>
+</html>
