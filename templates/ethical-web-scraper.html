@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="Cristian Caratti portfolio website" name="Cristian Caratti portfolio website" />
+    <meta name="google" content="notranslate" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}" /> -->
+    <link href="../static/assets/favicon.ico" rel="icon" />
+    <title>Cristian Caratti - Website</title>
+    <style>
+      * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+      body {
+        display:flex;flex-direction:column;margin: 2rem;
+      }
+      article {
+        margin: auto 20vw;
+        line-height:1.5
+      }
+      pre {
+        border-left: 6px solid #00458b;
+        font-size: 1rem;
+        line-height: 1.4;
+        margin: 0 0 24px;
+        max-width: 100%;
+        overflow: auto;
+        padding: 24px;
+        width: 100%;
+      }
+      code {
+        font-family: consolas, "Liberation Mono", courier, monospace;
+        padding: 0 3px;
+        word-wrap: break-word;
+      }
+      code,
+      pre {
+        background-color: #eee;
+      }
+
+      pre {
+        display: block;
+        font-family: monospace;
+        white-space: pre;
+      }
+      @media only screen and (max-width: 1000px) {
+        article {
+              margin: auto 5vw  
+            }
+      }
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      h1,h2,h4,blockquote,p,pre,footer {
+        margin: 1em 0 0 0;
+      }
+      footer {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <article>
+      <h1>The Python web scraper</h1> 
+    <h2>Problem I want to solve: to collect information from hackernews that has at least 100 points, so I am can read the most relevant info on the topic.</h2>
+    <blockquote>
+      <p>In simple term web scraping is the art of automate the process of getting data from a website without using their API. Why we would do that then? There&#39;s no API, the API is not free, restricted to certain users or the API is not good enough.</p>
+    </blockquote>
+    <p>Since we want to build an ethical web scraper, we need to check the example.com/robots.txt file that check who is the &#39;User-Agent&#39; and what we can scrape &#39;allow&#39; or not &#39;Disallow&#39;. If nothing is there, it implicitly means that we should be good to go.</p>
+    <p>Ex. from Airbnb website:</p>
+    <p><img src="../static/assets/airbnb.png" alt="Airbnb robots.txt" /></p>
+    <h3>Starting the project</h3>
+    <p>
+      We are using <strong><em>Beautiful Soup</em></strong> ( from PyPI ),as a Python library to scrape websites and <strong><em>requests</em></strong> to grab <em>html</em> files.
+    </p>
+    <p>On Terminal:</p>
+    <pre><code >&gt; pip3 <span>install </span><span>beautifulsoup4
+</span>&gt; pip3 <span>install </span>requests
+</code></pre>
+    <p>We create the Python file: Scrape.py file, importing those libraries.</p>
+    <pre><code class="lang-python"><span >import</span> requests
+<span>from</span> bs4 <span >import</span> BeautifulSoup
+<span>import</span> pprint
+</code></pre>
+    <h4>How to get the html content of a page from the website?</h4>
+    <p>We can send a request via the module:</p>
+    <pre><code class="lang-python"><span >res</span> = request.get(<span >'https://news.ycombinator.com/news'</span>)
+<span ># print(res,res.text) # and we are getting back the response status [200] and the html text;</span>
+<span >soup</span> = BeautifulSoup(res.text,<span >'html.parser'</span>) # transform the raw html string to usable data, a <span >'soup'</span> object easy to use
+<span >links</span> = soup.select(<span >'.storylink'</span>)
+<span >subtext</span> = soup.select(<span >'.subtext'</span>)
+</code></pre>
+    <p>Before diving deep into the code, let&#39;s see what is Beautiful Soup.</p>
+    <p>Beautiful Soup is a library that can help us to parse the text via a soup object, but we ned to add one more parameters, specific to get only html and not xml (that Beautiful Soup can parse too) Beautiful Soup has methods to get all specific data from the html: Some examples:</p>
+    <pre><code class="lang-python"># <span >find</span> <span >all</span> contest in <span >a</span> <span >list</span> form
+<span >print</span>(soup.body.contents)
+# <span >find</span> <span >all</span> paragraphs
+<span >print</span>(soup.find_all(<span >'p'</span>))
+# <span >find</span> <span >all</span> title
+<span >print</span>(soup.title)
+</code></pre>
+    <p>
+      Beautiful Soup <strong><em>selectors</em></strong
+      >: select(), via using <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors">css selectors</a>
+    </p>
+    <p>Now, we are ready to implement a create_custom_hn() function:</p>
+    <pre><code class="lang-python"><span ># Helper function; this is a common pattern to how to sort dictionaries 'Dict' , using a lambda function where the 2nd parameter is the key we want use to sort</span>
+
+<span class="hljs-function"><span >def</span> <span class="hljs-title">sort_stories_by_votes</span><span >(hnlist)</span></span>:
+    <span >return</span> sorted(hnlist,key= lambda <span >k:</span> k[<span >'votes'</span>],reverse=True)
+
+<span ># Build a the function that create the dict out of collected links and subtext</span>
+<span class="hljs-function"><span >def</span> <span class="hljs-title">create_custom_hn</span><span >(links,subtext)</span></span>:
+    hn = []
+    <span >for</span> index,item <span >in</span> enumerate(links):
+        <span ># why we use enumerate? we have 2 lists: links and subtext and we enumerate only on links, so the only way to grab subtext is use enumerate and use the index for the subtext</span>
+        title = links[index].getText() <span ># we can even use 'item' for 'links[index]' since we don't need the index</span>
+        href = links[index].get(<span >'href'</span>,None)
+        vote = subtext[index].select(<span >'.score'</span>)
+        <span ># now we need to check if the vote list exist otherwise we can skip the news</span>
+        <span >if</span> len(vote):
+            points = int(vote[<span >0</span>].getText().replace(<span >' points'</span>,<span >''</span>)) <span ># get rid of the 'points' text and just keep the 'integer' for the next check</span>
+            <span ># print(points)</span>
+            <span >if</span> points &gt; <span >99</span>:
+                hn.append({<span >'title'</span><span >:title</span>,<span >'link'</span><span >:href</span>,<span >'votes'</span><span >:points</span>}) <span ># creating the dictionary</span>
+    <span ># return hn</span>
+    <span >return</span> sort_stories_by_votes(hn) <span ># Helper function to sort</span>
+
+pprint.pprint(create_custom_hn(links,subtext))
+</code></pre>
+    <p>Lastly, we just need to run the Python file in the terminal and we are getting a nice, formatted result, thank the the &#39;pretty-print&#39; module.</p>
+    <p><img src="../static/assets/pprint-scrape.png" alt="After running &#39;pprint&#39; from Terminal" /></p>
+    </article>
+  </body>
+</html>
+
+<footer>&copy;cristiancaratti-templates 2021</footer>
+</body>
+</html>
