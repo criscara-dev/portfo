@@ -9,7 +9,7 @@ app = Flask(__name__)
 def my_home():
     return render_template('index.html')
 
-@app.route('/hackernews.html')
+@app.route('/hackernews')
 def test_page():   
     my_dict = scrape.page_from_scraped_data()
     my_dictJ = scrape.jobs_from_scraped_data()
